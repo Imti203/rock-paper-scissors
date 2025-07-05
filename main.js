@@ -11,20 +11,55 @@ const scissorsBtnElement = document.querySelector('#scissors-btn')
 const resetBtnElement = document.querySelector('#reset')
 
 // datastore 
-let userScore = 0
+let playerScore = 0
 let computerScore = 0
 
-// Rock Buttom fixed 
-rockBtnElement.addEventListener('click', () => {
-    console.log('you clicked on rock button');
+// coputer random choice 
+function getCoputerChoice() {
+    const choices = ['paper', 'Rock', 'Scissors']
+    const randomNumber = Math.floor(Math.random() * 3)
+    return choices[randomNumber]
+}
+
+// user choice 
+function getPlayerChoice(playerChoice) {
+    const computerChoice = getCoputerChoice()
+    switch ( playerChoice + computerChoice) {
+        case 'RockScissors':
+        case 'PaperRock':
+        case 'ScissorsPaper':
+            console.log('Player win!')
+            break;
+
+        case 'RockPaper':
+        case 'PaperScissors':
+        case 'ScissorsRock':
+            console.log('Player loses!')
+            break;
+
+        case 'RockRock':
+        case 'PaperPaper':
+        case 'ScissorsScissors':
+            console.log('Game is draw!')
+            break;
+    }
+}
+
+function main() {
+    // Rock Buttom fixed 
+    rockBtnElement.addEventListener('click', () => {
+        getPlayerChoice('Rock')
 })
 
 // Paper Button fixed
-paperBtnElement.addEventListener('click', () => {
-    console.log('you clicked on paper button');
+    paperBtnElement.addEventListener('click', () => {
+         getPlayerChoice('Paper')
 })
 
 // Scissors Button fixed
-scissorsBtnElement.addEventListener('click', () => {
-    console.log('you clicked on scissors button');
+    scissorsBtnElement.addEventListener('click', () => {
+        getPlayerChoice('Scissors')
 })
+}
+
+main()
