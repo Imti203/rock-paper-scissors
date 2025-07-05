@@ -94,5 +94,21 @@ function main() {
         getPlayerChoice('Scissors', scissorsBtnElement)
     })
 }
-
 main()
+
+resetBtnElement.addEventListener('click', () => {
+    //reset value
+    playerScore = 0
+    computerScore = 0
+
+    // update UI
+    playerScoreElement.textContent = playerScore
+    computerScoreElement.textContent = computerScore
+    resultAppElement.textContent = ''
+
+    // remove all button colors
+    rockBtnElement.classList.remove('winner', 'loser', 'draw')
+    paperBtnElement.classList.remove('winner', 'loser', 'draw')
+    scissorsBtnElement.classList.remove('winner', 'loser', 'draw')
+
+})
