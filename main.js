@@ -1,10 +1,10 @@
+(function game() {
 // selector 
 const appDivElement = document.querySelector('#app')
 const playerScoreElement = document.querySelector('#player-score')
 const computerScoreElement = document.querySelector('#computer-score')
 const scoreBoardElement = document.querySelector('.score-board')
 const resultAppElement = document.querySelector('#result')
-const choicBtnElement = document.querySelector('.choice-btn')
 const rockBtnElement = document.querySelector('#rock-btn')
 const paperBtnElement = document.querySelector('#paper-btn')
 const scissorsBtnElement = document.querySelector('#scissors-btn')
@@ -16,42 +16,70 @@ let computerScore = 0
 
 // coputer random choice 
 function getComputerChoice() {
-    const choices = ['paper', 'Rock', 'Scissors']
+    const choices = ['Rock', 'Paper', 'Scissors']
     const randomNumber = Math.floor(Math.random() * 3)
     return choices[randomNumber]
 }
 
+function getButtonByChoice(choice) {
+  switch (choice) {
+    case 'Rock': return rockBtnElement;
+    case 'Paper': return paperBtnElement;
+    case 'Scissors': return scissorsBtnElement;
+  }
+}
+
 // winner functionality 
 function win(playerChoice, computerChoice, buttonElement) {
-    playerScore++
-    playerScoreElement.textContent = playerScore
-    computerScoreElement.textContent = computerScore
-    resultAppElement.textContent = `${playerChoice} beats ${computerChoice}. You Win! 🔥`
-    buttonElement.classList.add('winner')
-    setTimeout(() => {
+  const computerButton = getButtonByChoice(computerChoice);
+
+  playerScore++;
+  playerScoreElement.textContent = playerScore;
+  computerScoreElement.textContent = computerScore;
+
+  resultAppElement.textContent = `${playerChoice} beats ${computerChoice}. You Win! 🔥`;
+
+  buttonElement.classList.add('winner');
+  computerButton.classList.add('loser');
+
+  setTimeout(() => {
     buttonElement.classList.remove('winner');
-    }, 1000);
+    computerButton.classList.remove('loser');
+  }, 1000);
 }
 
 // lose functionality 
 function lose(playerChoice, computerChoice, buttonElement) {
-    computerScore++
-    playerScoreElement.textContent = playerScore
-    computerScoreElement.textContent = computerScore
-    resultAppElement.textContent = `${playerChoice} loses to ${computerChoice}. You Lost...😢`
-    buttonElement.classList.add('loser')
-    setTimeout(() => {
+  const computerButton = getButtonByChoice(computerChoice);
+
+  computerScore++;
+  playerScoreElement.textContent = playerScore;
+  computerScoreElement.textContent = computerScore;
+
+  resultAppElement.textContent = `${playerChoice} loses to ${computerChoice}. You Lost...😢`;
+
+  buttonElement.classList.add('loser');
+  computerButton.classList.add('winner');
+
+  setTimeout(() => {
     buttonElement.classList.remove('loser');
-    }, 1000);
+    computerButton.classList.remove('winner');
+  }, 1000);
 }
 
 // draw functionality 
-function draw(playerChoice, computerChoice, buttonElement) { 
-    resultAppElement.textContent = `${playerChoice} equels ${computerChoice}. It's a Draw:💤`
-    buttonElement.classList.add('draw')
-    setTimeout(() => {
+function draw(playerChoice, computerChoice, buttonElement) {
+  const computerButton = getButtonByChoice(computerChoice);
+
+  resultAppElement.textContent = `${playerChoice} equals ${computerChoice}. It's a Draw:💤`;
+
+  buttonElement.classList.add('draw');
+  computerButton.classList.add('draw');
+
+  setTimeout(() => {
     buttonElement.classList.remove('draw');
-    }, 1000);
+    computerButton.classList.remove('draw');
+  }, 1000);
 }
 
 // player choice and game rules fixed
@@ -78,6 +106,7 @@ function getPlayerChoice(playerChoice, buttonElement) {
     }
 }
 
+// Main functionality 
 function main() {
     // Rock Buttom fixed 
     rockBtnElement.addEventListener('click', () => {
@@ -96,6 +125,7 @@ function main() {
 }
 main()
 
+// reset button
 resetBtnElement.addEventListener('click', () => {
     //reset value
     playerScore = 0
@@ -112,3 +142,4 @@ resetBtnElement.addEventListener('click', () => {
     scissorsBtnElement.classList.remove('winner', 'loser', 'draw')
 
 })
+})()
